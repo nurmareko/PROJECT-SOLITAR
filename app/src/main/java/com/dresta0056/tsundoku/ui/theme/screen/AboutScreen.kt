@@ -31,7 +31,7 @@ fun AboutScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun AboutScreenPreview() {
-    TsundokuTheme() {
+    TsundokuTheme {
         AboutScreen(rememberNavController())
     }
 }

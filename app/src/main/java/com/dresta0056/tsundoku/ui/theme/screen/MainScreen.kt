@@ -2,16 +2,20 @@ package com.dresta0056.tsundoku.ui.theme.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.dresta0056.tsundoku.navigation.Screen
 import com.dresta0056.tsundoku.R
 import com.dresta0056.tsundoku.ui.theme.TsundokuTheme
 import com.dresta0056.tsundoku.ui.theme.components.TsundokuTopAppBar
@@ -19,17 +23,36 @@ import com.dresta0056.tsundoku.ui.theme.components.TsundokuTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
     Scaffold(
-        topBar = { TsundokuTopAppBar() }
+        topBar = {
+            TsundokuTopAppBar(
+                actions = {
+                    IconButton(
+                        onClick = { navController.navigate(Screen.About.route) }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Info,
+                            contentDescription = stringResource(R.string.about)
+                        )
+                    }
+                }
+            )
+        }
     ) { innerPadding ->
-        Text(
-            modifier = Modifier.padding(innerPadding),
-            text = "main screen"
+        HomeScreen(
+            modifier = Modifier.padding(innerPadding)
         )
     }
+}
+
+@Composable
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier,
+        text = "main screen"
+    )
 }
 
 @Preview(showBackground = true)

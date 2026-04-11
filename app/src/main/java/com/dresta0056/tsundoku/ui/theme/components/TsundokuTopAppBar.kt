@@ -1,5 +1,6 @@
 package com.dresta0056.tsundoku.ui.theme.components
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -10,8 +11,13 @@ import com.dresta0056.tsundoku.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TsundokuTopAppBar(modifier: Modifier = Modifier) {
+fun TsundokuTopAppBar(
+    modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
+) {
     TopAppBar(
-        title = { Text(stringResource(R.string.app_name)) }
+        modifier = modifier,
+        title = { Text(stringResource(R.string.app_name)) },
+        actions = actions,
     )
 }
