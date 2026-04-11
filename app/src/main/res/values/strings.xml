@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Tsundoku</string>
     <string name="about">About</string>
+    <string name="stack_of_book_picture">stack of book picture</string>
 </resources>
