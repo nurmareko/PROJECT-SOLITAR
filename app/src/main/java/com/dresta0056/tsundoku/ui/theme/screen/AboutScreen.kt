@@ -25,18 +25,21 @@ fun AboutScreen(
     modifier: Modifier = Modifier
 ) {
     Scaffold(
-        topBar = { TsundokuTopAppBar(
-            navigationIcon = {
-                IconButton(
-                    onClick = { navController.popBackStack() }
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back),
-                    )
+        topBar = {
+            TsundokuTopAppBar(
+                title = { Text(stringResource(R.string.about)) },
+                navigationIcon = {
+                    IconButton(
+                        onClick = { navController.popBackStack() }
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.back)
+                        )
+                    }
                 }
-            }
-        ) }
+            )
+        }
     ) { innerPadding ->
         Text(
             modifier = Modifier.padding(innerPadding),

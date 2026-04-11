@@ -39,6 +39,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TsundokuTopAppBar(
+                title = {Text(stringResource(R.string.app_name))},
                 actions = {
                     IconButton(
                         onClick = { navController.navigate(Screen.About.route) }

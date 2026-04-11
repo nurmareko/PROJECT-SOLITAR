@@ -13,12 +13,13 @@ import com.dresta0056.tsundoku.R
 @Composable
 fun TsundokuTopAppBar(
     modifier: Modifier = Modifier,
+    title: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     navigationIcon: @Composable () -> Unit = {}
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(stringResource(R.string.app_name)) },
+        title = title,
         actions = actions,
         navigationIcon = navigationIcon
     )
