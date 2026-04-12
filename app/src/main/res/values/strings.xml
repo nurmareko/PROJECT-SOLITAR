@@ -5,4 +5,12 @@
     <string name="stack_of_book_picture">stack of book picture</string>
     <string name="tagline">Track your unreaded book</string>
     <string name="genre">Genre</string>
+    <string name="result_button_text">How long will this haunt me?</string>
+    <string name="title_field_text">Book title</string>
+    <string name="number_of_pages_field_text">Number of pages</string>
+    <string name="pages">pages</string>
+    <string name="fiction">Fiction</string>
+    <string name="non_fiction">Non-fiction</string>
+    <string name="manga">Manga</string>
+    <string name="textbook">Textbook</string>
 </resources>

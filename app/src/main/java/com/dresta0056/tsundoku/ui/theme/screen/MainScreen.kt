@@ -71,8 +71,16 @@ fun MainScreen(
 fun TsundokuDashboard(
     modifier: Modifier = Modifier
 ) {
+    var title by remember { mutableStateOf("") }
+    var pageCount by remember { mutableStateOf("") }
+
     var expanded by remember { mutableStateOf(false) }
-    val genres = listOf("Fiction", "Non-fiction", "Manga", "Textbook")
+    val genres = listOf(
+        stringResource(R.string.fiction),
+        stringResource(R.string.non_fiction),
+        stringResource(R.string.manga),
+        stringResource(R.string.textbook)
+    )
     var selectedGenre by remember { mutableStateOf(genres[0]) }
 
     Column(
@@ -91,21 +99,21 @@ fun TsundokuDashboard(
         Text(stringResource(R.string.tagline))
 
         OutlinedTextField(
-            value = "Godel, Escher, Bach",
-            onValueChange = { },
-            label = { Text("Book title") },
-            supportingText = { Text("Error") },
+            value = title,
+            onValueChange = { title = it },
+            label = { Text(stringResource(R.string.title_field_text)) },
+            supportingText = { Text("Error") }, // TODO
             isError = false,
             singleLine = true,
             keyboardOptions = KeyboardOptions()
         )
 
         OutlinedTextField(
-            value = "0",
+            value = pageCount,
             onValueChange = { },
-            label = { Text("Number of pages") },
-            trailingIcon = { Text("pages") },
-            supportingText = { Text("Error") },
+            label = { Text(stringResource(R.string.number_of_pages_field_text)) },
+            trailingIcon = { Text(stringResource(R.string.pages)) },
+            supportingText = { Text("Error") }, // TODO
             isError = false,
             singleLine = true,
             keyboardOptions = KeyboardOptions()
@@ -142,7 +150,7 @@ fun TsundokuDashboard(
         Button(
             onClick = {  }
         ) {
-            Text("ADD A BOOK")
+            Text(stringResource(R.string.result_button_text))
         }
 
     }
