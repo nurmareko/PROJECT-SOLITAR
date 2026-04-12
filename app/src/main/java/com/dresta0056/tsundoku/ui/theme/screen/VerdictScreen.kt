@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -57,7 +59,23 @@ fun VerdictContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text("The Verdict")
+        Text("Godel, Escher, Bach")
+        Text("a non-fiction")
+        Card() {
+            Text("Estimated reading time")
+            Text("~37 hours")
+            Text("At 3 min/page x 756 pages")
+        }
+
+        Card() {
+            Text("You bought this to display on your shelf, didn't you?")
+        }
+
+        Button(
+            onClick = {}
+        ) {
+            Text("SHARE MY SHAME")
+        }
     }
 }
 
