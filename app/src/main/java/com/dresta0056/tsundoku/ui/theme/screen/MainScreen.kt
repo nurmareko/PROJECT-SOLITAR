@@ -4,10 +4,12 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -118,7 +120,7 @@ fun TsundokuDashboard(
             supportingText = { Text("Error") }, // TODO
             isError = false,
             singleLine = true,
-            keyboardOptions = KeyboardOptions()
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
         GenreDropdownMenu(
@@ -136,6 +138,9 @@ fun TsundokuDashboard(
 
         if (showSheet) {
             ResultBottomSheet(
+                title = title,
+                pageCount = pageCount,
+                genre = selectedGenre,
                 onDismiss = { showSheet = false }
             )
         }
@@ -187,8 +192,13 @@ fun GenreDropdownMenu(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResultBottomSheet(
+    title: String,
+    pageCount: String,
+    genre: String,
     onDismiss: () -> Unit
 ) {
+    val readingHours = estimateReadingHours(pageCount.toInt(), genre)
+
     ModalBottomSheet(
         onDismissRequest = onDismiss
     ) {
@@ -198,9 +208,26 @@ fun ResultBottomSheet(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Result")
+            Text(title)
+            Text(genre)
+            Text("Estimate reading time")
+            Text(stringResource(R.string.estimate_reading_hours, readingHours))
+            Text(stringResource(R.string.result_pages, pageCount))
+            Text("result message")
+            Row {
+                Button(onClick = {}) {
+                    Text("share")
+                }
+                Button(onClick = {}) {
+                    Text("try another")
+                }
+            }
         }
     }
+}
+
+private fun estimateReadingHours(pageCount: Int, genre: String): Int {
+    return 0
 }
 
 @Preview(showBackground = true)

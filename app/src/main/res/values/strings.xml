@@ -13,4 +13,6 @@
     <string name="non_fiction">Non-fiction</string>
     <string name="manga">Manga</string>
     <string name="textbook">Textbook</string>
+    <string name="estimate_reading_hours">~%d hours</string>
+    <string name="result_pages">%s pages</string>
 </resources>
