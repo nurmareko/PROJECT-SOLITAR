@@ -6,10 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dresta0056.tsundoku.ui.theme.screen.AboutScreen
+import com.dresta0056.tsundoku.ui.theme.screen.AddBookScreen
 import com.dresta0056.tsundoku.ui.theme.screen.MainScreen
 
 @Composable
-fun setupNavGraph(navController: NavHostController = rememberNavController() ) {
+fun SetupNavGraph(navController: NavHostController = rememberNavController() ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Home.route
@@ -19,6 +20,9 @@ fun setupNavGraph(navController: NavHostController = rememberNavController() ) {
         }
         composable(route = Screen.About.route) {
             AboutScreen(navController)
+        }
+        composable(route = Screen.AddBook.route) {
+            AddBookScreen(navController)
         }
 
     }

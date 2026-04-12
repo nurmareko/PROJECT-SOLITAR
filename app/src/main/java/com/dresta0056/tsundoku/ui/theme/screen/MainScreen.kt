@@ -53,12 +53,18 @@ fun MainScreen(
             )
         }
     ) { innerPadding ->
-        HomeScreen(modifier = Modifier.padding(innerPadding))
+        TsundokuDashboard(
+            modifier = Modifier.padding(innerPadding),
+            navController = navController
+        )
     }
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun TsundokuDashboard(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+) {
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -87,7 +93,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.size(20.dp))
 
         Button(
-            onClick = {}
+            onClick = { navController.navigate(Screen.AddBook.route) }
         ) {
             Text("ADD A BOOK")
         }
