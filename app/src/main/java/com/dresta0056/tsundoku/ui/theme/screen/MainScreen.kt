@@ -1,14 +1,11 @@
 package com.dresta0056.tsundoku.ui.theme.screen
 
 import android.content.res.Configuration
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -133,24 +130,14 @@ fun TsundokuDashboard(
             }
         )
 
-        if (showSheet) {
-            ModalBottomSheet(onDismissRequest = { showSheet = false }) {
-                AnimatedVisibility(
-                    visible = true,
-                    enter = fadeIn(animationSpec = tween(400)) +
-                            slideInVertically(initialOffsetY = { it / 4 })
-                ) {
-                    Column {
-                        Text("Result")
-                    }
-                }
-            }
+        Button(onClick = { showSheet = true }) {
+            Text(stringResource(R.string.result_button_text))
         }
 
-        Button(
-            onClick = { showSheet = true }
-        ) {
-            Text(stringResource(R.string.result_button_text))
+        if (showSheet) {
+            ResultBottomSheet(
+                onDismiss = { showSheet = false }
+            )
         }
 
     }
@@ -193,6 +180,25 @@ fun GenreDropdownMenu(
                     }
                 )
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ResultBottomSheet(
+    onDismiss: () -> Unit
+) {
+    ModalBottomSheet(
+        onDismissRequest = onDismiss
+    ) {
+        // Your bottom sheet content goes here
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("Result")
         }
     }
 }
