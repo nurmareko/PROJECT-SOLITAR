@@ -54,16 +54,14 @@ fun MainScreen(
         }
     ) { innerPadding ->
         TsundokuDashboard(
-            modifier = Modifier.padding(innerPadding),
-            navController = navController
+            modifier = Modifier.padding(innerPadding)
         )
     }
 }
 
 @Composable
 fun TsundokuDashboard(
-    modifier: Modifier = Modifier,
-    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -93,7 +91,7 @@ fun TsundokuDashboard(
         Spacer(modifier = Modifier.size(20.dp))
 
         Button(
-            onClick = { navController.navigate(Screen.AddBook.route) }
+            onClick = {  }
         ) {
             Text("ADD A BOOK")
         }
