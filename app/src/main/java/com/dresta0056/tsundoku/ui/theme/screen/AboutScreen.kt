@@ -74,6 +74,6 @@ fun AboutContent(
 @Composable
 fun AboutScreenPreview() {
     TsundokuTheme {
-        VerdictScreen(rememberNavController())
+        AboutScreen(rememberNavController())
     }
 }
