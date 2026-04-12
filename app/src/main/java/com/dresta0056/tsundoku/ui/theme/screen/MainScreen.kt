@@ -41,6 +41,7 @@ import com.dresta0056.tsundoku.R
 import com.dresta0056.tsundoku.navigation.Screen
 import com.dresta0056.tsundoku.ui.theme.TsundokuTheme
 import com.dresta0056.tsundoku.ui.theme.components.TsundokuTopAppBar
+import kotlin.math.ceil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -227,7 +228,17 @@ fun ResultBottomSheet(
 }
 
 private fun estimateReadingHours(pageCount: Int, genre: String): Int {
-    return 0
+    if (pageCount <= 0) return 0
+
+    val pagesPerHour = when (genre.lowercase()) {
+        "manga" -> 120
+        "fiction" -> 60
+        "nonfiction" -> 40
+        "textbook" -> 20
+        else -> 50 // fallback
+    }
+
+    return ceil(pageCount.toDouble() / pagesPerHour).toInt()
 }
 
 @Preview(showBackground = true)
