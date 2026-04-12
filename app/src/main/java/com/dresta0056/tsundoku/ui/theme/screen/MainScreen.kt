@@ -106,6 +106,6 @@ fun TsundokuDashboard(
 @Composable
 fun MainScreenPreview() {
     TsundokuTheme {
-        MainScreen(rememberNavController())
+        VerdictScreen(rememberNavController())
     }
 }

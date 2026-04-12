@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dresta0056.tsundoku.R
+import com.dresta0056.tsundoku.navigation.Screen
 import com.dresta0056.tsundoku.ui.theme.TsundokuTheme
 import com.dresta0056.tsundoku.ui.theme.components.TsundokuTopAppBar
 
@@ -57,13 +58,17 @@ fun AddBookScreen(
             )
         }
     ) { innerPadding ->
-        AddBookContent(modifier = Modifier.padding(innerPadding))
+        AddBookContent(
+            modifier = Modifier.padding(innerPadding),
+            navController = navController
+        )
     }
 }
 
 @Composable
 fun AddBookContent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
     val radioOptions = listOf("fiction", "non-fiction", "manga", "technical")
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
@@ -124,7 +129,7 @@ fun AddBookContent(
         }
 
         Button(
-            onClick = {}
+            onClick = { navController.navigate(Screen.Verdict.route) }
         ) {
             Text("How long will this haunt me?")
         }

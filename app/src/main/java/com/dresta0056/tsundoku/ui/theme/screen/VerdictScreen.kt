@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -24,13 +23,13 @@ import com.dresta0056.tsundoku.ui.theme.TsundokuTheme
 import com.dresta0056.tsundoku.ui.theme.components.TsundokuTopAppBar
 
 @Composable
-fun AboutScreen(
+fun VerdictScreen(
     navController: NavHostController
 ) {
     Scaffold(
         topBar = {
             TsundokuTopAppBar(
-                title = { Text(stringResource(R.string.about)) },
+                title = { Text(stringResource(R.string.verdict)) },
                 navigationIcon = {
                     IconButton(
                         onClick = { navController.popBackStack() }
@@ -44,12 +43,12 @@ fun AboutScreen(
             )
         }
     ) { innerPadding ->
-        AboutContent(modifier = Modifier.padding(innerPadding))
+        VerdictContent(modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun AboutContent(
+fun VerdictContent(
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -58,21 +57,14 @@ fun AboutContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Text("積ん読")
-        Text("Pronounciation")
-        Text("tsun-doku")
-        Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ac porttitor nisi. Quisque sit amet quam magna. Nulla euismod, elit a volutpat elementum, justo est ullamcorper eros, vel hendrerit nisl velit blandit purus.")
-        Icon(
-            imageVector = Icons.Filled.StarBorder,
-            contentDescription = null
-        )
+        Text("The Verdict")
     }
 }
 
 @Preview(showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun AboutScreenPreview() {
+fun VerdictScreenPreview() {
     TsundokuTheme {
         VerdictScreen(rememberNavController())
     }
