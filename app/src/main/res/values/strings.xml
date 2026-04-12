@@ -2,7 +2,6 @@
     <string name="app_name">Tsundoku</string>
     <string name="about">About</string>
     <string name="back">Back</string>
-    <string name="add_a_book">Add a book</string>
-    <string name="verdict">The verdict</string>
     <string name="stack_of_book_picture">stack of book picture</string>
+    <string name="tagline">Track your unreaded book</string>
 </resources>

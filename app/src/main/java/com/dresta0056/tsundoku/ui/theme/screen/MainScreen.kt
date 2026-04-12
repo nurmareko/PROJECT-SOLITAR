@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -15,6 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -76,19 +78,30 @@ fun TsundokuDashboard(
             contentDescription = stringResource(R.string.stack_of_book_picture)
         )
 
-        Spacer(modifier = Modifier.size(20.dp))
+        Text(stringResource(R.string.tagline))
 
-        Text("3 books waiting")
-        Text("The stack is growing...")
+        OutlinedTextField(
+            value = "Godel, Escher, Bach",
+            onValueChange = { },
+            label = { Text("Book title") },
+            supportingText = { Text("Error") },
+            isError = false,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions()
+        )
 
-        Spacer(modifier = Modifier.size(20.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.size(20.dp))
+        OutlinedTextField(
+            value = "0",
+            onValueChange = { },
+            label = { Text("Number of pages") },
+            trailingIcon = { Text("pages") },
+            supportingText = { Text("Error") },
+            isError = false,
+            singleLine = true,
+            keyboardOptions = KeyboardOptions()
+        )
 
-        Text("Estimated neglect")
-        Text("8h 45m of potential wisdom lost")
 
-        Spacer(modifier = Modifier.size(20.dp))
 
         Button(
             onClick = {  }
