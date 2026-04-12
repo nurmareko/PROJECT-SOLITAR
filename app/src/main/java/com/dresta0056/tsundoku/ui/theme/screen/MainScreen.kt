@@ -1,6 +1,10 @@
 package com.dresta0056.tsundoku.ui.theme.screen
 
 import android.content.res.Configuration
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +21,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -73,8 +78,8 @@ fun TsundokuDashboard(
 ) {
     var title by remember { mutableStateOf("") }
     var pageCount by remember { mutableStateOf("") }
+    var showSheet by remember { mutableStateOf(false) }
 
-    var expanded by remember { mutableStateOf(false) }
     val genres = listOf(
         stringResource(R.string.fiction),
         stringResource(R.string.non_fiction),
@@ -110,7 +115,7 @@ fun TsundokuDashboard(
 
         OutlinedTextField(
             value = pageCount,
-            onValueChange = { },
+            onValueChange = { pageCount = it },
             label = { Text(stringResource(R.string.number_of_pages_field_text)) },
             trailingIcon = { Text(stringResource(R.string.pages)) },
             supportingText = { Text("Error") }, // TODO
@@ -119,40 +124,76 @@ fun TsundokuDashboard(
             keyboardOptions = KeyboardOptions()
         )
 
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
-        ) {
-            OutlinedTextField(
-                value = selectedGenre,
-                onValueChange = {},
-                readOnly = true,
-                label = { Text(stringResource(R.string.genre)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true),
-            )
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
-                genres.forEach { genre ->
-                    DropdownMenuItem(
-                        text = { Text(genre) },
-                        onClick = {
-                            selectedGenre = genre
-                            expanded = false
-                        }
-                    )
+        GenreDropdownMenu(
+            selectedValue = selectedGenre,
+            options = genres,
+            label = stringResource(R.string.genre),
+            onValueChangedEvent = { newSelection ->
+                selectedGenre = newSelection
+            }
+        )
+
+        if (showSheet) {
+            ModalBottomSheet(onDismissRequest = { showSheet = false }) {
+                AnimatedVisibility(
+                    visible = true,
+                    enter = fadeIn(animationSpec = tween(400)) +
+                            slideInVertically(initialOffsetY = { it / 4 })
+                ) {
+                    Column {
+                        Text("Result")
+                    }
                 }
             }
         }
 
         Button(
-            onClick = {  }
+            onClick = { showSheet = true }
         ) {
             Text(stringResource(R.string.result_button_text))
         }
 
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun GenreDropdownMenu(
+    selectedValue: String,
+    options: List<String>,
+    label: String,
+    onValueChangedEvent: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded },
+        modifier = modifier
+    ) {
+        OutlinedTextField(
+            value = selectedValue,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
+        )
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onValueChangedEvent(option)
+                        expanded = false
+                    }
+                )
+            }
+        }
     }
 }
 
