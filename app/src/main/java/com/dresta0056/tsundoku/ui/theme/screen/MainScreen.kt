@@ -13,6 +13,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
@@ -214,7 +215,10 @@ fun ResultBottomSheet(
             Text("Estimate reading time")
             Text(stringResource(R.string.estimate_reading_hours, readingHours))
             Text(stringResource(R.string.result_pages, pageCount))
-            Text("result message")
+            Card {
+                Text("result message")
+            }
+
             Row {
                 Button(onClick = {}) {
                     Text("share")
