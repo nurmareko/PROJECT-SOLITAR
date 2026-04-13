@@ -40,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,23 +85,24 @@ fun MainScreen(
 fun TsundokuDashboard(
     modifier: Modifier = Modifier,
 ) {
-    var title by remember { mutableStateOf("") }
-    var pageCount by remember { mutableStateOf("") }
-    var showSheet by remember { mutableStateOf(false) }
-    var titleError by remember { mutableStateOf(false) }
-    var pageCountError by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
     val genres = listOf(
         stringResource(R.string.fiction),
         stringResource(R.string.non_fiction),
         stringResource(R.string.manga),
         stringResource(R.string.textbook)
+
     )
+
+    var title by remember { mutableStateOf("") }
+    var titleError by remember { mutableStateOf(false) }
+
+    var pageCount by remember { mutableStateOf("") }
+    var pageCountError by remember { mutableStateOf(false) }
+
     var selectedGenre by remember { mutableStateOf(genres[0]) }
-
-
-    val context = LocalContext.current
-
+    var showSheet by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -109,9 +111,8 @@ fun TsundokuDashboard(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
+
         Image(
-            modifier = Modifier
-                .padding(top = 20.dp),
             painter = painterResource(R.drawable.book_stack),
             contentDescription = stringResource(R.string.stack_of_book_picture)
         )
@@ -125,7 +126,9 @@ fun TsundokuDashboard(
             supportingText = { ErrorHint(titleError, stringResource(R.string.title_error)) },
             isError = titleError,
             singleLine = true,
-            keyboardOptions = KeyboardOptions()
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            )
         )
 
         OutlinedTextField(
@@ -136,7 +139,10 @@ fun TsundokuDashboard(
             supportingText = { ErrorHint(pageCountError, stringResource(R.string.page_count_error)) },
             isError = pageCountError,
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            )
         )
 
         GenreDropdownMenu(
@@ -168,6 +174,12 @@ fun TsundokuDashboard(
                 pageCount = pageCount,
                 genre = selectedGenre,
                 onDismiss = { showSheet = false },
+                onTryAnother = {
+                    showSheet = false
+                    title = ""
+                    pageCount = ""
+                    selectedGenre = genres[0]
+                },
                 context = context
             )
         }
@@ -192,18 +204,25 @@ fun GenreDropdownMenu(
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
+        modifier = modifier,
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-        modifier = modifier
+        onExpandedChange = { expanded = !expanded }
     ) {
         OutlinedTextField(
+            modifier = Modifier
+                .menuAnchor(
+                    ExposedDropdownMenuAnchorType.PrimaryNotEditable,
+                    true
+                ),
             value = selectedValue,
             onValueChange = {},
             readOnly = true,
             label = { Text(label) },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+            }
         )
+
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -228,15 +247,13 @@ fun ResultBottomSheet(
     pageCount: String,
     genre: String,
     onDismiss: () -> Unit,
+    onTryAnother: () -> Unit,
     context: Context
     ) {
     val readingHours = estimateReadingHours(pageCount.toInt(), genre)
     val result = "result"
 
-    ModalBottomSheet(
-        onDismissRequest = onDismiss
-    ) {
-        // Your bottom sheet content goes here
+    ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -254,15 +271,15 @@ fun ResultBottomSheet(
             Text(stringResource(R.string.estimate_reading_hours, readingHours))
             Text(stringResource(R.string.result_pages, pageCount))
             Card {
-                Text("result message")
+                Text(stringResource(R.string.result_message))
             }
 
             Row {
                 Button(onClick = { shareResult(context, result) }) {
-                    Text("share")
+                    Text(stringResource(R.string.share))
                 }
-                Button(onClick = {}) {
-                    Text("try another")
+                Button(onClick = onTryAnother) {
+                    Text(stringResource(R.string.try_another))
                 }
             }
         }
