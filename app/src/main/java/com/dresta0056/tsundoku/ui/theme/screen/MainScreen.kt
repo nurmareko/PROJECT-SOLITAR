@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -47,8 +45,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,7 +54,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.dresta0056.tsundoku.R
@@ -76,7 +71,12 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TsundokuTopAppBar(
-                title = {Text(stringResource(R.string.app_name))},
+                title = {
+                    Text(
+                        text = stringResource(R.string.app_name),
+                        fontWeight = FontWeight.Bold
+                    )
+                },
                 actions = {
                     IconButton(
                         onClick = { navController.navigate(Screen.About.route) }
@@ -101,7 +101,6 @@ fun MainScreen(
 fun TsundokuDashboard(
     modifier: Modifier = Modifier,
 ) {
-
     val context = LocalContext.current
     val genres = listOf(
         "",
@@ -109,7 +108,6 @@ fun TsundokuDashboard(
         stringResource(R.string.non_fiction),
         stringResource(R.string.manga),
         stringResource(R.string.textbook)
-
     )
 
     var title by remember { mutableStateOf("") }
@@ -119,71 +117,120 @@ fun TsundokuDashboard(
     var pageCountError by remember { mutableStateOf(false) }
 
     var selectedGenre by remember { mutableStateOf(genres[0]) }
+    var genreError by remember { mutableStateOf(false) }
     var showSheet by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
 
         Image(
             painter = painterResource(R.drawable.book_stack),
-            contentDescription = stringResource(R.string.stack_of_book_picture)
+            contentDescription = stringResource(R.string.stack_of_book_picture),
+            modifier = Modifier.size(180.dp)
         )
 
-        Text(stringResource(R.string.tagline))
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.tagline),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
             value = title,
-            onValueChange = { title = it },
+            onValueChange = {
+                title = it
+                if (titleError) titleError = false
+            },
+            modifier = Modifier.fillMaxWidth(),
             label = { Text(stringResource(R.string.title_field_text)) },
             supportingText = { ErrorHint(titleError, stringResource(R.string.title_error)) },
             isError = titleError,
             singleLine = true,
+            shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
             )
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         OutlinedTextField(
             value = pageCount,
-            onValueChange = { pageCount = it },
+            onValueChange = {
+                pageCount = it
+                if (pageCountError) pageCountError = false
+            },
+            modifier = Modifier.fillMaxWidth(),
             label = { Text(stringResource(R.string.number_of_pages_field_text)) },
-            trailingIcon = {Text(stringResource(R.string.pages), modifier = Modifier.padding(16.dp)) },
+            trailingIcon = {
+                Text(
+                    text = stringResource(R.string.pages),
+                    modifier = Modifier.padding(end = 16.dp),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            },
             supportingText = { ErrorHint(pageCountError, stringResource(R.string.page_count_error)) },
             isError = pageCountError,
             singleLine = true,
+            shape = RoundedCornerShape(12.dp),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
             )
         )
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         GenreDropdownMenu(
             selectedValue = selectedGenre,
             options = genres,
             label = stringResource(R.string.genre),
+            isError = genreError,
+            errorMessage = stringResource(R.string.genre_error),
             onValueChangedEvent = { newSelection ->
                 selectedGenre = newSelection
-            }
+                if (genreError) genreError = false
+            },
+            modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
                 titleError = title.isBlank()
                 val pages = pageCount.toIntOrNull()
                 pageCountError = pages == null || pages <= 0
+                genreError = selectedGenre.isBlank()
 
-                if (titleError || pageCountError) return@Button
+                if (titleError || pageCountError || genreError) return@Button
 
                 showSheet = true
-            }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(50),
+            contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            Text(stringResource(R.string.result_button_text))
+            Text(
+                text = stringResource(R.string.result_button_text),
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.Bold
+                )
+            )
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
 
         if (showSheet) {
             ResultBottomSheet(
@@ -196,27 +243,37 @@ fun TsundokuDashboard(
                     title = ""
                     pageCount = ""
                     selectedGenre = genres[0]
+                    titleError = false
+                    pageCountError = false
+                    genreError = false
                 },
                 context = context
             )
         }
-
     }
 }
 
 @Composable
 fun ErrorHint(isError: Boolean, errorMessage: String) {
-    if (isError) Text(errorMessage)
+    if (isError) {
+        Text(
+            text = errorMessage,
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GenreDropdownMenu(
+    modifier: Modifier = Modifier,
     selectedValue: String,
     options: List<String>,
     label: String,
-    onValueChangedEvent: (String) -> Unit,
-    modifier: Modifier = Modifier
+    isError: Boolean = false,
+    errorMessage: String = "",
+    onValueChangedEvent: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -227,6 +284,7 @@ fun GenreDropdownMenu(
     ) {
         OutlinedTextField(
             modifier = Modifier
+                .fillMaxWidth()
                 .menuAnchor(
                     ExposedDropdownMenuAnchorType.PrimaryNotEditable,
                     true
@@ -235,6 +293,9 @@ fun GenreDropdownMenu(
             onValueChange = {},
             readOnly = true,
             label = { Text(label) },
+            isError = isError,
+            supportingText = { ErrorHint(isError, errorMessage) },
+            shape = RoundedCornerShape(12.dp),
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             }
@@ -248,8 +309,12 @@ fun GenreDropdownMenu(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = option,
-                            color = if (index == 0) Color.Black else Color.Unspecified
+                            text = if (index == 0)
+                                stringResource(R.string.genre_placeholder)
+                            else option,
+                            color = if (index == 0)
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.onSurface
                         )
                     },
                     onClick = {
@@ -272,9 +337,10 @@ fun ResultBottomSheet(
     onDismiss: () -> Unit,
     onTryAnother: () -> Unit,
     context: Context
-    ) {
+) {
     val readingHours = estimateReadingHours(pageCount.toInt(), genre)
-    val result = "result"
+    val message = resultMessage(readingHours)
+    val shareText = buildShareText(title, readingHours, message)
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
@@ -282,7 +348,6 @@ fun ResultBottomSheet(
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 12.dp)
         ) {
-
             Text(
                 text = title,
                 style = MaterialTheme.typography.headlineSmall.copy(
@@ -345,7 +410,7 @@ fun ResultBottomSheet(
                 )
             ) {
                 Text(
-                    text = resultMessage(readingHours),
+                    text = message,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 16.dp),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.SemiBold,
@@ -360,7 +425,7 @@ fun ResultBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Button(
-                    onClick = { shareResult(context, result) },
+                    onClick = { shareResult(context, shareText) },
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(50),
                     contentPadding = PaddingValues(vertical = 14.dp)
@@ -395,7 +460,7 @@ private fun estimateReadingHours(pageCount: Int, genre: String): Int {
     val (wpp, wpm) = when (genre.lowercase()) {
         "manga"       -> 30 to 300
         "novel"       -> 250 to 230
-        "non-fiction" -> 300 to 200
+        "non-fiction"  -> 300 to 200
         "textbook"    -> 400 to 100
         else          -> 250 to 200
     }
@@ -404,22 +469,27 @@ private fun estimateReadingHours(pageCount: Int, genre: String): Int {
 }
 
 @Composable
-private fun resultMessage(readingHours: Int, hoursPerDay: Double = 0.5): String {
-    val dayNeeded = ceil(readingHours.toDouble() / hoursPerDay).toInt().coerceAtLeast(1)
+private fun resultMessage(readingHours: Int): String {
+    val hoursPerDay = 0.5
+    val daysNeeded = ceil(readingHours.toDouble() / hoursPerDay).toInt().coerceAtLeast(1)
 
-    return stringResource(R.string.result_message, readingHours, dayNeeded)
+    return stringResource(R.string.result_message, readingHours, daysNeeded)
+}
+
+private fun buildShareText(title: String, readingHours: Int, message: String): String {
+    return "\uD83D\uDCDA \"$title\" will take me ~$readingHours hours to read. $message #Tsundoku"
 }
 
 @SuppressLint("QueryPermissionsNeeded")
-private fun shareResult(context: Context, result: String) {
+private fun shareResult(context: Context, text: String) {
     val shareIntent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, result)
+        putExtra(Intent.EXTRA_TEXT, text)
     }
 
-    if (shareIntent.resolveActivity(context.packageManager) != null) {
-        context.startActivity(shareIntent)
-    }
+    context.startActivity(
+        Intent.createChooser(shareIntent, null)
+    )
 }
 
 @Preview(showBackground = true)
