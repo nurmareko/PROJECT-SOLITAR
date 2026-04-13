@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tsundoku</string>
+    <string name="tagline">Waktunya Membaca.</string>
+
+    <string name="about">Tentang</string>
+    <string name="back">Kembali</string>
+    <string name="share">Bagikan</string>
+    <string name="pages">Halaman</string>
+    <string name="try_another">Coba lagi</string>
+
+    <string name="title_field_text">Judul buku</string>
+    <string name="number_of_pages_field_text">Jumlah halaman</string>
+    <string name="genre">Genre</string>
+    <string name="genre_placeholder">Pilih genre</string>
+    <string name="estimate_reading_time">Perkiraan waktu membaca</string>
+
+    <string name="novel">Novel</string>
+    <string name="non_fiction">Non-fiksi</string>
+    <string name="manga">Manga</string>
+    <string name="textbook">Buku teks</string>
+
+    <string name="result_button_text">Berapa lama ini akan menghantui saya?</string>
+
+    <string name="title_error">Setiap buku harus memiliki judul</string>
+    <string name="page_count_error">Setiap buku harus memiliki halaman</string>
+    <string name="genre_error">Setiap buku harus memiliki genre</string>
+
+    <string name="estimate_reading_hours">~%d jam</string>
+    <string name="result_pages">%s halaman</string>
+    <string name="result_message">"Buku ini akan memakan waktu ~%1d jam. Jika Anda membaca 30 menit sehari, Anda akan menyelesaikannya dalam waktu sekitar %3d hari."</string>
+
+    <string name="stack_of_book_picture">Gambar tumpukan buku</string>
+
+    <string name="about_pronunciation_label">PELAFALAN</string>
+    <string name="about_definition_body">Tsundoku (積ん読) adalah kata bahasa Jepang yang indah untuk tindakan mengumpulkan buku dan membiarkannya menumpuk tanpa dibaca.</string>
+    <string name="about_definition_bold">Kita semua pernah mengalaminya.</string>
+
+</resources>
