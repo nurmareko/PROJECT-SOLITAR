@@ -481,7 +481,7 @@ private fun resultMessage(readingHours: Int): String {
 }
 
 private fun buildShareText(title: String, readingHours: Int, message: String): String {
-    return "\uD83D\uDCDA \"$title\" will take me ~$readingHours hours to read. $message #Tsundoku"
+    return "\"$title\". $message #Tsundoku"
 }
 
 @SuppressLint("QueryPermissionsNeeded")
