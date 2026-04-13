@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.10.6")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
