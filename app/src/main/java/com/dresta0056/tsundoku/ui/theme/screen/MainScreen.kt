@@ -224,7 +224,11 @@ fun ResultBottomSheet(
                 .padding(16.dp)
         ) {
             Text(title)
-            Text(genre)
+
+            Card{
+                Text(genre)
+            }
+
             Text("Estimate reading time")
             Text(stringResource(R.string.estimate_reading_hours, readingHours))
             Text(stringResource(R.string.result_pages, pageCount))
