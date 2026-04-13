@@ -45,6 +45,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -129,13 +130,16 @@ fun TsundokuDashboard(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
+
         Image(
             painter = painterResource(R.drawable.book_stack),
             contentDescription = stringResource(R.string.stack_of_book_picture),
-            modifier = Modifier.size(180.dp)
+            modifier = Modifier
+                .size(180.dp)
+                .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp))
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = stringResource(R.string.tagline),
