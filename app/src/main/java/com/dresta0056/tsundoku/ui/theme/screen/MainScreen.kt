@@ -41,7 +41,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -111,15 +111,15 @@ fun TsundokuDashboard(
         stringResource(R.string.textbook)
     )
 
-    var title by remember { mutableStateOf("") }
-    var titleError by remember { mutableStateOf(false) }
+    var title by rememberSaveable { mutableStateOf("") }
+    var titleError by rememberSaveable { mutableStateOf(false) }
 
-    var pageCount by remember { mutableStateOf("") }
-    var pageCountError by remember { mutableStateOf(false) }
+    var pageCount by rememberSaveable { mutableStateOf("") }
+    var pageCountError by rememberSaveable { mutableStateOf(false) }
 
-    var selectedGenre by remember { mutableStateOf(genres[0]) }
-    var genreError by remember { mutableStateOf(false) }
-    var showSheet by remember { mutableStateOf(false) }
+    var selectedGenre by rememberSaveable { mutableStateOf(genres[0]) }
+    var genreError by rememberSaveable { mutableStateOf(false) }
+    var showSheet by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -279,7 +279,7 @@ fun GenreDropdownMenu(
     errorMessage: String = "",
     onValueChangedEvent: (String) -> Unit
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var expanded by rememberSaveable { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
         modifier = modifier,
@@ -344,7 +344,7 @@ fun ResultBottomSheet(
 ) {
     val readingHours = estimateReadingHours(pageCount.toInt(), genre)
     val message = resultMessage(readingHours)
-    val shareText = buildShareText(title, readingHours, message)
+    val shareText = buildShareText(title, message)
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
@@ -480,7 +480,7 @@ private fun resultMessage(readingHours: Int): String {
     return stringResource(R.string.result_message, readingHours, daysNeeded)
 }
 
-private fun buildShareText(title: String, readingHours: Int, message: String): String {
+private fun buildShareText(title: String, message: String): String {
     return "\"$title\". $message #Tsundoku"
 }
 

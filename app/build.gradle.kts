@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
     implementation("androidx.compose.ui:ui-text-google-fonts:1.10.6")
+    implementation(libs.androidx.compose.runtime.saveable)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
