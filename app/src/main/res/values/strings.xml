@@ -15,4 +15,6 @@
     <string name="textbook">Textbook</string>
     <string name="estimate_reading_hours">~%d hours</string>
     <string name="result_pages">%s pages</string>
+    <string name="page_count_error">Every book must have pages</string>
+    <string name="title_error">Every book need a name</string>
 </resources>

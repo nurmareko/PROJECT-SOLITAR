@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.Button
@@ -41,6 +40,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -87,6 +87,8 @@ fun TsundokuDashboard(
     var title by remember { mutableStateOf("") }
     var pageCount by remember { mutableStateOf("") }
     var showSheet by remember { mutableStateOf(false) }
+    var titleError by remember { mutableStateOf(false) }
+    var pageCountError by remember { mutableStateOf(false) }
 
     val genres = listOf(
         stringResource(R.string.fiction),
@@ -98,6 +100,7 @@ fun TsundokuDashboard(
 
 
     val context = LocalContext.current
+
 
     Column(
         modifier = modifier
@@ -119,8 +122,8 @@ fun TsundokuDashboard(
             value = title,
             onValueChange = { title = it },
             label = { Text(stringResource(R.string.title_field_text)) },
-            supportingText = { Text("Error") }, // TODO
-            isError = false,
+            supportingText = { ErrorHint(titleError, stringResource(R.string.title_error)) },
+            isError = titleError,
             singleLine = true,
             keyboardOptions = KeyboardOptions()
         )
@@ -130,8 +133,8 @@ fun TsundokuDashboard(
             onValueChange = { pageCount = it },
             label = { Text(stringResource(R.string.number_of_pages_field_text)) },
             trailingIcon = { Text(stringResource(R.string.pages)) },
-            supportingText = { Text("Error") }, // TODO
-            isError = false,
+            supportingText = { ErrorHint(pageCountError, stringResource(R.string.page_count_error)) },
+            isError = pageCountError,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
@@ -145,7 +148,17 @@ fun TsundokuDashboard(
             }
         )
 
-        Button(onClick = { showSheet = true }) {
+        Button(
+            onClick = {
+                titleError = title.isBlank()
+                val pages = pageCount.toIntOrNull()
+                pageCountError = pages == null || pages <= 0
+
+                if (titleError || pageCountError) return@Button
+
+                showSheet = true
+            }
+        ) {
             Text(stringResource(R.string.result_button_text))
         }
 
@@ -160,6 +173,11 @@ fun TsundokuDashboard(
         }
 
     }
+}
+
+@Composable
+fun ErrorHint(isError: Boolean, errorMessage: String) {
+    if (isError) Text(errorMessage)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
