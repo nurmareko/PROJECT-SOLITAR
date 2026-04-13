@@ -1,26 +1,38 @@
 <resources>
     <string name="app_name">Tsundoku</string>
+    <string name="tagline">Track your unread books</string>
+
     <string name="about">About</string>
     <string name="back">Back</string>
-    <string name="stack_of_book_picture">stack of book picture</string>
-    <string name="tagline">Track your unreaded book</string>
-    <string name="genre">Genre</string>
-    <string name="result_button_text">How long will this haunt me?</string>
+    <string name="share">Share</string>
+    <string name="pages">Pages</string>
+    <string name="try_another">Try another</string>
+
     <string name="title_field_text">Book title</string>
     <string name="number_of_pages_field_text">Number of pages</string>
-    <string name="pages">pages</string>
-    <string name="novel">novel</string>
+    <string name="genre">Genre</string>
+    <string name="genre_placeholder">Select a genre</string>
+    <string name="estimate_reading_time">Estimate reading time</string>
+
+    <string name="novel">Novel</string>
     <string name="non_fiction">Non-fiction</string>
     <string name="manga">Manga</string>
     <string name="textbook">Textbook</string>
+
+    <string name="result_button_text">How long will this haunt me?</string>
+
+    <string name="title_error">Every book needs a title</string>
+    <string name="page_count_error">Every book must have pages</string>
+    <string name="genre_error">Every book needs a genre</string>
+
     <string name="estimate_reading_hours">~%d hours</string>
     <string name="result_pages">%s pages</string>
-    <string name="page_count_error">Every book must have pages</string>
-    <string name="title_error">Every book need a name</string>
-    <string name="genre_error">Every book need have its genre</string>
-    <string name="genre_placeholder">Select a genre</string>
     <string name="result_message">"This book will take ~%1d hours. If you read 30 minutes a day, you'll finish in about %3d days."</string>
-    <string name="share">share</string>
-    <string name="try_another">try another</string>
-    <string name="estimate_reading_time">Estimate reading time</string>
+
+    <string name="stack_of_book_picture">Stack of books picture</string>
+
+    <string name="about_pronunciation_label">PRONUNCIATION</string>
+    <string name="about_definition_body">Tsundoku (積ん読) is a beautiful Japanese word for the act of acquiring books and letting them pile up without reading them.</string>
+    <string name="about_definition_bold">We\'ve all been there.</string>
+
 </resources>
