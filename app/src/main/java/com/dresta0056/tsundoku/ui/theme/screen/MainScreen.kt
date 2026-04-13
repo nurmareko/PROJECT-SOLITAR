@@ -1,5 +1,8 @@
 package com.dresta0056.tsundoku.ui.theme.screen
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -89,6 +93,9 @@ fun TsundokuDashboard(
     )
     var selectedGenre by remember { mutableStateOf(genres[0]) }
 
+
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -143,7 +150,8 @@ fun TsundokuDashboard(
                 title = title,
                 pageCount = pageCount,
                 genre = selectedGenre,
-                onDismiss = { showSheet = false }
+                onDismiss = { showSheet = false },
+                context = context
             )
         }
 
@@ -197,9 +205,11 @@ fun ResultBottomSheet(
     title: String,
     pageCount: String,
     genre: String,
-    onDismiss: () -> Unit
-) {
+    onDismiss: () -> Unit,
+    context: Context
+    ) {
     val readingHours = estimateReadingHours(pageCount.toInt(), genre)
+    val result = "result"
 
     ModalBottomSheet(
         onDismissRequest = onDismiss
@@ -220,7 +230,7 @@ fun ResultBottomSheet(
             }
 
             Row {
-                Button(onClick = {}) {
+                Button(onClick = { shareResult(context, result) }) {
                     Text("share")
                 }
                 Button(onClick = {}) {
@@ -243,6 +253,18 @@ private fun estimateReadingHours(pageCount: Int, genre: String): Int {
     }
 
     return ceil(pageCount.toDouble() / pagesPerHour).toInt()
+}
+
+@SuppressLint("QueryPermissionsNeeded")
+private fun shareResult(context: Context, result: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, result)
+    }
+
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
+    }
 }
 
 @Preview(showBackground = true)
