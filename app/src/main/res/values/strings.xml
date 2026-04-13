@@ -17,7 +17,8 @@
     <string name="result_pages">%s pages</string>
     <string name="page_count_error">Every book must have pages</string>
     <string name="title_error">Every book need a name</string>
-    <string name="result_message">result message</string>
+    <string name="result_message">"This book will take ~%1d hours. If you read 30 minutes a day, you'll finish in about %3d days."</string>
     <string name="share">share</string>
     <string name="try_another">try another</string>
+    <string name="estimate_reading_time">Estimate reading time</string>
 </resources>
