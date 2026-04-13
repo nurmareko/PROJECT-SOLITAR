@@ -37,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -88,7 +89,8 @@ fun TsundokuDashboard(
 
     val context = LocalContext.current
     val genres = listOf(
-        stringResource(R.string.fiction),
+        "",
+        stringResource(R.string.novel),
         stringResource(R.string.non_fiction),
         stringResource(R.string.manga),
         stringResource(R.string.textbook)
@@ -135,7 +137,7 @@ fun TsundokuDashboard(
             value = pageCount,
             onValueChange = { pageCount = it },
             label = { Text(stringResource(R.string.number_of_pages_field_text)) },
-            trailingIcon = { Text(stringResource(R.string.pages)) },
+            trailingIcon = {Text(stringResource(R.string.pages), modifier = Modifier.padding(16.dp)) },
             supportingText = { ErrorHint(pageCountError, stringResource(R.string.page_count_error)) },
             isError = pageCountError,
             singleLine = true,
@@ -227,13 +229,19 @@ fun GenreDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            options.forEach { option ->
+            options.forEachIndexed { index, option ->
                 DropdownMenuItem(
-                    text = { Text(option) },
+                    text = {
+                        Text(
+                            text = option,
+                            color = if (index == 0) Color.Black else Color.Unspecified
+                        )
+                    },
                     onClick = {
                         onValueChangedEvent(option)
                         expanded = false
-                    }
+                    },
+                    enabled = index != 0
                 )
             }
         }

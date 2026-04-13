@@ -9,7 +9,7 @@
     <string name="title_field_text">Book title</string>
     <string name="number_of_pages_field_text">Number of pages</string>
     <string name="pages">pages</string>
-    <string name="fiction">Fiction</string>
+    <string name="novel">novel</string>
     <string name="non_fiction">Non-fiction</string>
     <string name="manga">Manga</string>
     <string name="textbook">Textbook</string>
