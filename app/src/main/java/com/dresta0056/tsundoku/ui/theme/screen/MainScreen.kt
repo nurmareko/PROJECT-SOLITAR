@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuAnchorType
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
@@ -228,6 +229,8 @@ fun ResultBottomSheet(
             Card{
                 Text(genre)
             }
+
+            HorizontalDivider()
 
             Text("Estimate reading time")
             Text(stringResource(R.string.estimate_reading_hours, readingHours))
