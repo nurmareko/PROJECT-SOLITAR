@@ -351,6 +351,7 @@ fun ResultBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp, vertical = 12.dp)
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = title,
