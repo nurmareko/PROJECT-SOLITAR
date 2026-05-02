@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-13T15:30:56.121179266Z">
+        <DropdownSelection timestamp="2026-05-02T17:01:25.564144749Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=0B231FDD4002KE" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/sheena/.android/avd/Medium_Phone.avd" />
             </handle>
           </Target>
         </DropdownSelection>
