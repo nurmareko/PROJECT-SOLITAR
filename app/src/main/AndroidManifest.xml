@@ -12,6 +12,7 @@
         android:theme="@style/Theme.Tsundoku">
         <activity
             android:name=".MainActivity"
+
             android:exported="true"
             android:theme="@style/Theme.Tsundoku">
             <intent-filter>
